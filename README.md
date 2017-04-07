@@ -8,6 +8,8 @@ Use docker-compose.yml file from this repository to spin up local environment on
 For more information read [getting started](http://docs.docker4drupal.org/en/latest/).
 
 ## Changes
+Mapping ```/web``` and ```/vendor``` direcotires in docker's volumes.
+
 ```yml  
   php:
     ...
