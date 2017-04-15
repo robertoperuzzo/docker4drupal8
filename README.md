@@ -60,7 +60,9 @@ Go to the [project page](http://www.cis.upenn.edu/~bcpierce) for more informatio
 brew install unison
 ```
 
-### Unison fsmonitor with Unox
+### Unison fsmonitor for macOS
+Go to the [project page](https://github.com/hnsl/unox) for more informations.
+
 ```
 curl "https://raw.githubusercontent.com/hnsl/unox/master/unox.py" -o "/usr/local/bin/unison-fsmonitor" && chmod +x /usr/local/bin/unison-fsmonitor
 
