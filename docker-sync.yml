@@ -1,0 +1,13 @@
+version: "2"
+
+syncs:
+  docker-sync-unison:
+    src: './web'
+    dest: '/var/www/web'
+    sync_userid: '82'
+    sync_excludes: ['.gitignore', '.git/', '.idea/']
+#  docker-sync-unison-another-project:
+#    src: '/absolute/path/to/project/codebase'
+#    dest: '/var/www/html'
+#    sync_userid: '82'
+#    sync_excludes: ['.gitignore', '.git/', '.idea/']

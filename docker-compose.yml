@@ -25,9 +25,11 @@ services:
       # PHP_XDEBUG_REMOTE_CONNECT_BACK: 0         # This is needed to respect remote.host setting bellow
       # PHP_XDEBUG_REMOTE_HOST: "10.254.254.254"  # You will also need to 'sudo ifconfig lo0 alias 10.254.254.254'
     volumes:
-      - ./web:/var/www/web
+#      - ./:/var/www/html
       - ./vendor:/var/www/vendor
-#      - d4d-unison-sync:/var/www/html:rw # Replace volume to this to use docker-sync for macOS users
+      - ./drush:/var/www/drush
+      - ./scripts:/var/www/scripts
+      - docker-sync-unison:/var/www/web # Replace volume to this to use docker-sync for macOS users
 
   nginx:
     image: wodby/drupal-nginx:8-1.10-2.0.0
@@ -38,10 +40,10 @@ services:
       - php
     environment:
       NGINX_BACKEND_HOST: php
-      NGINX_SERVER_ROOT: /var/www/web/
+      NGINX_SERVER_ROOT: /var/www/web
     volumes:
-      - ./web:/var/www/web
-      - ./vendor:/var/www/vendor
+#      - ./:/var/www/html
+      - docker-sync-unison:/var/www/web # Replace volume to this to use docker-sync for macOS users
     labels:
       - 'traefik.backend=nginx'
       - 'traefik.port=80'
@@ -60,8 +62,8 @@ services:
 #      - 'traefik.port=6081'
 #      - 'traefik.frontend.rule=Host:varnish.drupal.docker.localhost'
 
-  redis:
-    image: wodby/redis:3.2-2.0.1
+#  redis:
+#    image: wodby/redis:3.2-2.0.1
 
   pma:
     image: phpmyadmin/phpmyadmin
@@ -76,16 +78,16 @@ services:
       - 'traefik.port=80'
       - 'traefik.frontend.rule=Host:pma.drupal.docker.localhost'
 
-  solr:
-    image: wodby/drupal-solr:8-6.4-2.0.0
+#  solr:
+#    image: wodby/drupal-solr:8-6.4-2.0.0
 #    image: wodby/drupal-solr:8-6.3-2.0.0
 #    image: wodby/drupal-solr:7-5.5-2.0.0
-    environment:
-      SOLR_HEAP: 1024m
-    labels:
-      - 'traefik.backend=solr'
-      - 'traefik.port=8983'
-      - 'traefik.frontend.rule=Host:solr.drupal.docker.localhost'
+#    environment:
+#      SOLR_HEAP: 1024m
+#    labels:
+#      - 'traefik.backend=solr'
+#      - 'traefik.port=8983'
+#      - 'traefik.frontend.rule=Host:solr.drupal.docker.localhost'
 
   mailhog:
     image: mailhog/mailhog
@@ -121,6 +123,8 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
 
 # Docker-sync for macOS users
-#volumes:
-#  d4d-unison-sync:
-#    external: true
+volumes:
+ docker-sync-unison:
+   external: true
+
+# Drupal console
